@@ -1,0 +1,12 @@
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/bin/Debug/netcoreapp3.1/Console_Battleship.deps.json
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/bin/Debug/netcoreapp3.1/Console_Battleship.runtimeconfig.json
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/bin/Debug/netcoreapp3.1/Console_Battleship.runtimeconfig.dev.json
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/bin/Debug/netcoreapp3.1/Console_Battleship.dll
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/bin/Debug/netcoreapp3.1/Console_Battleship.pdb
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.csprojAssemblyReference.cache
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.AssemblyInfoInputs.cache
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.AssemblyInfo.cs
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.csproj.CoreCompileInputs.cache
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.dll
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.pdb
+/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.genruntimeconfig.cache
