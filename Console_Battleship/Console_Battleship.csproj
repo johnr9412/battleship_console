@@ -8,6 +8,5 @@
   <ItemGroup>
     <Folder Include="App\" />
     <Folder Include="Class\" />
-    <Folder Include="Global\" />
   </ItemGroup>
 </Project>

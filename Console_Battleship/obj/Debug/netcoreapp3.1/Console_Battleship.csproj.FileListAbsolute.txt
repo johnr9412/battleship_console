@@ -10,3 +10,16 @@
 /Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.dll
 /Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.pdb
 /Users/johnr9412/Projects/Console_Battleship/Console_Battleship/obj/Debug/netcoreapp3.1/Console_Battleship.genruntimeconfig.cache
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\bin\Debug\netcoreapp3.1\Console_Battleship.exe
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\bin\Debug\netcoreapp3.1\Console_Battleship.deps.json
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\bin\Debug\netcoreapp3.1\Console_Battleship.runtimeconfig.json
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\bin\Debug\netcoreapp3.1\Console_Battleship.runtimeconfig.dev.json
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\bin\Debug\netcoreapp3.1\Console_Battleship.dll
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\bin\Debug\netcoreapp3.1\Console_Battleship.pdb
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.csprojAssemblyReference.cache
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.AssemblyInfoInputs.cache
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.AssemblyInfo.cs
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.csproj.CoreCompileInputs.cache
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.dll
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.pdb
+C:\Users\John\Source\Repos\battleship_console\Console_Battleship\obj\Debug\netcoreapp3.1\Console_Battleship.genruntimeconfig.cache
