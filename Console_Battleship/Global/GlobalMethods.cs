@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Console_Battleship.Class;
 
 namespace Console_Battleship.Global
 {
@@ -7,16 +8,16 @@ namespace Console_Battleship.Global
     {
         public static void PauseConsoleWithStringParameter(string outputString)
         {
-            PauseConsole(outputString);
+            Console.WriteLine(outputString);
+            PauseConsole();
         }
         public static void PauseConsoleWithoutStringParameter()
         {
-            PauseConsole("Press any key to continue...");
+            PauseConsole();
         }
-        private static void PauseConsole(string outputString)
+        private static void PauseConsole()
         {
-            Console.WriteLine();
-            Console.WriteLine(outputString);
+            Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
         public static int takeNumericInput(string displayString, List<int> allowableValues = null)
@@ -61,6 +62,32 @@ namespace Console_Battleship.Global
             Console.Write(displayString);
             string input = Console.ReadLine();
             return input;
+        }
+        public static void showPlayerGameBoard(Player player)
+        {
+
+        }
+        public static void displayTopRow()
+        {
+            //extra space needed to bump the top row correctly
+            Console.Write("{0,4}", " ");
+
+            for(int i = 0; i < StaticValues.X_AXIS_SIZE; i++)
+            {
+                Console.Write("{0,4}", i.ToString());
+            }
+            Console.WriteLine();
+        }
+        public static List<Coordinate> getPlayerShipCoordinates(Player player)
+        {
+            List<Coordinate> shipCoordinates = new List<Coordinate>();
+
+            foreach(Ship ship in player.Ships)
+            {
+                shipCoordinates.AddRange(ship.ShipLocation);
+            }
+
+            return shipCoordinates;
         }
     }
 }

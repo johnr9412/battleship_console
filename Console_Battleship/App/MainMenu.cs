@@ -20,7 +20,7 @@ namespace Console_Battleship.App
 
             if(menuChoice == 1)
             {
-                MenuPVP.startScreen();
+                MenuPVP.setupPVP();
 
                 return false;
             }

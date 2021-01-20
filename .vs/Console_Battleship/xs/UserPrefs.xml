@@ -1,28 +1,27 @@
 ﻿<Properties StartupConfiguration="{D962C15A-063B-4845-A38D-D7E098459586}|Default">
   <MonoDevelop.Ide.ItemProperties.Console__Battleship PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Console_Battleship/App/MainMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Console_Battleship/Global/StaticValues.cs">
     <Files>
-      <File FileName="Console_Battleship/Program.cs" Line="16" Column="2" />
-      <File FileName="Console_Battleship/App/MainMenu.cs" Line="21" Column="1" />
-      <File FileName="Console_Battleship/App/MenuPVP.cs" Line="8" Column="39" />
-      <File FileName="Console_Battleship/Global/GlobalMethods.cs" Line="7" Column="10" />
+      <File FileName="Console_Battleship/App/MenuPVP.cs" Line="25" Column="1" />
+      <File FileName="Console_Battleship/Global/GlobalMethods.cs" Line="87" Column="61" />
+      <File FileName="Console_Battleship/Class/Player.cs" Line="11" Column="23" />
+      <File FileName="Console_Battleship/Class/Ship.cs" Line="9" Column="26" />
+      <File FileName="Console_Battleship/Class/Coordinate.cs" Line="4" Column="18" />
+      <File FileName="Console_Battleship/Global/StaticValues.cs" Line="14" Column="11" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Console_Battleship" expanded="True">
             <Node name="Console_Battleship" expanded="True">
-              <Node name="App" expanded="True">
-                <Node name="MainMenu.cs" selected="True" />
-              </Node>
+              <Node name="App" expanded="True" />
               <Node name="Class" expanded="True" />
-              <Node name="Global" expanded="True" />
+              <Node name="Global" expanded="True">
+                <Node name="StaticValues.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

@@ -12,5 +12,8 @@ namespace Console_Battleship.Global
             2,
             0
         };
+
+        public static int X_AXIS_SIZE = 10;
+        public static int Y_AXIS_SIZE = 10;
     }
 }
