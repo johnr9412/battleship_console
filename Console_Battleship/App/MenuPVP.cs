@@ -19,11 +19,9 @@ namespace Console_Battleship.App
 
             Console.Clear();
 
-            showPlayerSetupBoard(player1);
+            player1 = setPlayerShips(player1);
 
-            //Player1 add pieces
-
-            //Player2 add pieces
+            player2 = setPlayerShips(player2);
 
             //play game class call
         }
@@ -49,9 +47,10 @@ namespace Console_Battleship.App
                 PlayerOrder = playerOrder
             };
         }
-        public static void showPlayerSetupBoard(Player player)
+        private static void showPlayerSetupBoard(Player player, Ship shipBeingBuilt)
         {
             List<Coordinate> playerShipCoordinates = GlobalMethods.getPlayerShipCoordinates(player);
+            playerShipCoordinates.AddRange(shipBeingBuilt.ShipLocation);
 
             GlobalMethods.displayTopRow();
             for (int y = 0; y < StaticValues.Y_AXIS_SIZE; y++)
@@ -73,30 +72,151 @@ namespace Console_Battleship.App
 
             //for breathing room
             Console.WriteLine();
+        }
 
-            GlobalMethods.PauseConsoleWithoutStringParameter();
+        private static Player setPlayerShips(Player player)
+        {
+            Console.WriteLine("Now it is time for " + player.PlayerName + " to add their ships");
+            GlobalMethods.PauseConsoleWithStringParameter("Please hide the screen from the other player");
+
+            player.Ships.Add(addShipToBoard(player, "Carrier", 5));
+            player.Ships.Add(addShipToBoard(player, "Battleship", 4));
+            player.Ships.Add(addShipToBoard(player, "Destroyer", 3));
+            player.Ships.Add(addShipToBoard(player, "Cruiser", 3));
+            player.Ships.Add(addShipToBoard(player, "Patrol Boat", 2));
+
+            return player;
+        }
+        private static Ship addShipToBoard(Player player, string shipName, int shipLength)
+        {
+            Ship returnShip = new Ship
+            {
+                ShipTitle = shipName
+            };
+            for (int i = 0; i < shipLength; i++)
+            {
+                Console.Clear();
+                Console.WriteLine("Place your pieces for the " + returnShip.ShipTitle + ". The number of pieces for this ship is " + shipLength.ToString());
+                Console.WriteLine();
+                showPlayerSetupBoard(player, returnShip);
+                bool areValidCoordinates = false;
+                while (!areValidCoordinates)
+                {
+                    int x_coordinate = GlobalMethods.takeNumericInput("Type the X coordinate for the location " + (i + 1).ToString() + " of " + shipLength.ToString() + ": ", new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+                    int y_coordinate = GlobalMethods.takeNumericInput("Type the Y coordinate for the location " + (i + 1).ToString() + " of " + shipLength.ToString() + ": ", new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+                    if (areShipCoordinatesValidForPlayer(player, returnShip, x_coordinate, y_coordinate))
+                    {
+                        areValidCoordinates = true;
+                        returnShip.ShipLocation.Add(new Coordinate
+                        {
+                            X_Axis = x_coordinate,
+                            Y_Axis = y_coordinate
+                        });
+                    }
+                    else
+                    {
+                        Console.WriteLine("Those coordinates are not valid because they are either already taken or don't make a straight line. Please try again");
+                    }
+                }
+            }
+
+
+
+
+
+            return returnShip;
+        }
+        private static bool areShipCoordinatesValidForPlayer(Player player, Ship shipBeingBuilt, int x_coordinate, int y_coordinate)
+        {
+            if (!isShipBeingBuiltCorrectly(shipBeingBuilt, x_coordinate, y_coordinate) || shipBeingBuilt.ShipLocation.Where(x => x.X_Axis == x_coordinate && x.Y_Axis == y_coordinate).Count() > 0)
+            {
+                return false;
+            }
+            else
+            {
+                foreach (Ship ship in player.Ships)
+                {
+                    if (ship.ShipLocation.Where(x => x.X_Axis == x_coordinate && x.Y_Axis == y_coordinate).Count() > 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+        private static bool isShipBeingBuiltCorrectly(Ship shipBeingBuilt, int x_coordinate, int y_coordinate)
+        {
+            if (shipBeingBuilt.ShipLocation.Count == 0)
+            {
+                return true;
+            }
+            else if (shipBeingBuilt.ShipLocation.Count == 1)
+            {
+                //must be in 4 locations around it
+                int existing_x_coordinate = shipBeingBuilt.ShipLocation.FirstOrDefault().X_Axis;
+                int existing_y_coordinate = shipBeingBuilt.ShipLocation.FirstOrDefault().Y_Axis;
+
+                List<Coordinate> allowableCoordinates = new List<Coordinate>
+                {
+                    new Coordinate
+                    {
+                        X_Axis = existing_x_coordinate - 1,
+                        Y_Axis = existing_y_coordinate
+                    },
+                    new Coordinate
+                    {
+                        X_Axis = existing_x_coordinate + 1,
+                        Y_Axis = existing_y_coordinate
+                    },
+                    new Coordinate
+                    {
+                        X_Axis = existing_x_coordinate,
+                        Y_Axis = existing_y_coordinate - 1
+                    },
+                    new Coordinate
+                    {
+                        X_Axis = existing_x_coordinate,
+                        Y_Axis = existing_y_coordinate + 1
+                    }
+                };
+
+                if(allowableCoordinates.Where(i => i.X_Axis == x_coordinate && i.Y_Axis == y_coordinate).Count() > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //take the values that establish a line and only allow spots at the beginning or end
+                if(shipBeingBuilt.ShipLocation[0].X_Axis == shipBeingBuilt.ShipLocation[1].X_Axis)
+                {
+                    //must make line on x axis
+                    int maximum_y_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.Y_Axis).FirstOrDefault().Y_Axis + 1;
+                    int minimum_y_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.Y_Axis).LastOrDefault().Y_Axis -1;
+                    if(x_coordinate == shipBeingBuilt.ShipLocation[0].X_Axis && (y_coordinate == maximum_y_coordinate || y_coordinate == minimum_y_coordinate))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    //it's the y axis
+                    //must make line on x axis
+                    int maximum_x_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.X_Axis).FirstOrDefault().X_Axis + 1;
+                    int minimum_x_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.X_Axis).LastOrDefault().X_Axis - 1;
+                    if (y_coordinate == shipBeingBuilt.ShipLocation[0].Y_Axis && (x_coordinate == maximum_x_coordinate || x_coordinate == minimum_x_coordinate))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
-
-//player1.Ships.Add(new Ship
-//{
-//    ShipLocation = new List<Coordinate>
-//                {
-//                    new Coordinate
-//                    {
-//                        X_Axis = 1,
-//                        Y_Axis = 1
-//                    },
-//                    new Coordinate
-//                    {
-//                        X_Axis = 1,
-//                        Y_Axis = 2
-//                    },
-//                    new Coordinate
-//                    {
-//                        X_Axis = 1,
-//                        Y_Axis = 3
-//                    }
-//                }
-//});

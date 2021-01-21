@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4CRF7NSp7KwO/8ScU5yfioflt1BwHULIicCQu7zgplq9+KL4GlQTxjjWscXTl9PM2J+oYJXxF2dD/xTImk7qcg==",
+  "dgSpecHash": "F6slThRaYhpiBnqxDj7XQ57VpR5NSxRWDMinx3RLy3sjmsOaVaGvOd4fVhlKaB/j7GduooOyDyu4vZkAemiPfg==",
   "success": true,
-  "projectFilePath": "/Users/johnr9412/Projects/Console_Battleship/Console_Battleship/Console_Battleship.csproj",
+  "projectFilePath": "C:\\Users\\John\\source\\repos\\battleship_console\\Console_Battleship\\Console_Battleship.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
