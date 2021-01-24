@@ -23,7 +23,7 @@ namespace Console_Battleship.App
             player2 = setPlayerShips(player2);
 
             GlobalMethods.PauseConsoleWithStringParameter("Ready to proceed?");
-            GamePVP.playGameWithPlayers(new List<Player> { player1, player2 });
+            GamePVP.playGameWithPlayers(player1, player2);
         }
 
         private static void welcomeScreen()
@@ -73,7 +73,6 @@ namespace Console_Battleship.App
             //for breathing room
             Console.WriteLine();
         }
-
         private static Player setPlayerShips(Player player)
         {
             Console.WriteLine("Now it is time for " + player.PlayerName + " to add their ships");

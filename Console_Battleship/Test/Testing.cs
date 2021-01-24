@@ -270,7 +270,7 @@ namespace Console_Battleship.Test
                     }
                 }
             };
-            GamePVP.playGameWithPlayers(players);
+            GamePVP.playGameWithPlayers(players[0], players[1]);
             GlobalMethods.PauseConsoleWithoutStringParameter();
         }
     }
