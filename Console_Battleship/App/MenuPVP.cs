@@ -20,10 +20,10 @@ namespace Console_Battleship.App
             Console.Clear();
 
             player1 = setPlayerShips(player1);
-
             player2 = setPlayerShips(player2);
 
-            //play game class call
+            GlobalMethods.PauseConsoleWithStringParameter("Ready to proceed?");
+            GamePVP.playGameWithPlayers(new List<Player> { player1, player2 });
         }
 
         private static void welcomeScreen()
@@ -47,7 +47,7 @@ namespace Console_Battleship.App
                 PlayerOrder = playerOrder
             };
         }
-        private static void showPlayerSetupBoard(Player player, Ship shipBeingBuilt)
+        public static void showPlayerSetupBoard(Player player, Ship shipBeingBuilt)
         {
             List<Coordinate> playerShipCoordinates = GlobalMethods.getPlayerShipCoordinates(player);
             playerShipCoordinates.AddRange(shipBeingBuilt.ShipLocation);
@@ -120,9 +120,7 @@ namespace Console_Battleship.App
                 }
             }
 
-
-
-
+            Console.Clear();
 
             return returnShip;
         }

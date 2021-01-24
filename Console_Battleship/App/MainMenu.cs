@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Console_Battleship.Global;
+using Console_Battleship.Test;
 
 namespace Console_Battleship.App
 {
@@ -29,6 +30,11 @@ namespace Console_Battleship.App
                 Console.Clear();
                 Console.WriteLine("Thanks for playing! Bye now");
                 return true;
+            }
+            else if(menuChoice == 69)
+            {
+                Console.Clear();
+                Testing.automateSetup();
             }
 
             return true;

@@ -63,10 +63,6 @@ namespace Console_Battleship.Global
             string input = Console.ReadLine();
             return input;
         }
-        public static void showPlayerGameBoard(Player player)
-        {
-
-        }
         public static void displayTopRow()
         {
             //extra space needed to bump the top row correctly
