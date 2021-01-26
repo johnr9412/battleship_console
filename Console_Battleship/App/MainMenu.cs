@@ -25,12 +25,17 @@ namespace Console_Battleship.App
 
                 return false;
             }
+            else if(menuChoice == 2)
+            {
+                GlobalMethods.PauseConsoleWithStringParameter("That isn't done yet! Pick a different option");
+                return false;
+            }
             else if(menuChoice == 0)
             {
                 Console.Clear();
                 Console.WriteLine("Thanks for playing! Bye now");
                 return true;
-            }
+            } //69 lol
             else if(menuChoice == 69)
             {
                 Console.Clear();

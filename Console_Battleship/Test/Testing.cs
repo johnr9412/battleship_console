@@ -143,7 +143,7 @@ namespace Console_Battleship.Test
                 },
                 new Player
                 {
-                    PlayerName = "Mimi",
+                    PlayerName = "The opponent",
                     PlayerOrder = 2,
                     Ships = new List<Ship>
                     {

@@ -12,9 +12,9 @@ namespace Console_Battleship.App
         {
             welcomeScreen();
 
-            Player player1 = setupPlayer(1);
+            Player player1 = setupPlayerObject(1);
             GlobalMethods.PauseConsoleWithStringParameter("Player " + player1.PlayerOrder.ToString() + " setup");
-            Player player2 = setupPlayer(2);
+            Player player2 = setupPlayerObject(2);
             GlobalMethods.PauseConsoleWithStringParameter("Player " + player2.PlayerOrder.ToString() + " setup");
 
             Console.Clear();
@@ -35,7 +35,7 @@ namespace Console_Battleship.App
             Console.Clear();
         }
 
-        private static Player setupPlayer(int playerOrder)
+        private static Player setupPlayerObject(int playerOrder)
         {
             Console.Clear();
             Console.WriteLine("Hello Player " + playerOrder.ToString());
@@ -192,7 +192,7 @@ namespace Console_Battleship.App
                 //take the values that establish a line and only allow spots at the beginning or end
                 if(shipBeingBuilt.ShipLocation[0].X_Axis == shipBeingBuilt.ShipLocation[1].X_Axis)
                 {
-                    //must make line on x axis
+                    //must make a line on the X axis
                     int maximum_y_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.Y_Axis).FirstOrDefault().Y_Axis + 1;
                     int minimum_y_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.Y_Axis).LastOrDefault().Y_Axis -1;
                     if(x_coordinate == shipBeingBuilt.ShipLocation[0].X_Axis && (y_coordinate == maximum_y_coordinate || y_coordinate == minimum_y_coordinate))
@@ -202,8 +202,7 @@ namespace Console_Battleship.App
                 }
                 else
                 {
-                    //it's the y axis
-                    //must make line on x axis
+                    //must make a line on the Y axis
                     int maximum_x_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.X_Axis).FirstOrDefault().X_Axis + 1;
                     int minimum_x_coordinate = shipBeingBuilt.ShipLocation.OrderByDescending(i => i.X_Axis).LastOrDefault().X_Axis - 1;
                     if (y_coordinate == shipBeingBuilt.ShipLocation[0].Y_Axis && (x_coordinate == maximum_x_coordinate || x_coordinate == minimum_x_coordinate))

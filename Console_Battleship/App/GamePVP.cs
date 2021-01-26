@@ -11,16 +11,16 @@ namespace Console_Battleship.App
     {
         public static void playGameWithPlayers(Player player1, Player player2)
         {
-            bool playGame = true;
-            while (playGame)
+            bool victoryCondition = false;
+            while (!victoryCondition)
             {
-                player1 = playGamePlayerVsPlayer(player1, player2);
-                if (evaluateGameOver(player1.Shots.Where(x => x.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList(), player2.Ships))
+                player1 = currentPlayerTurnVsOpponent(player1, player2);
+                if (didPlayerSinkAllOpponentShips(player1, player2.Ships))
                 {
                     Console.Clear();
                     Console.WriteLine("YOU WIN!!! ");
                     GlobalMethods.PauseConsoleWithStringParameter("WAY TO GO " + player1.PlayerName);
-                    playGame = false;
+                    victoryCondition = true;
                     break;
                 }
                 else
@@ -29,13 +29,13 @@ namespace Console_Battleship.App
                 }
 
 
-                player2 = playGamePlayerVsPlayer(player2, player1);
-                if (evaluateGameOver(player2.Shots.Where(x => x.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList(), player1.Ships))
+                player2 = currentPlayerTurnVsOpponent(player2, player1);
+                if (didPlayerSinkAllOpponentShips(player2, player1.Ships))
                 {
                     Console.Clear();
                     Console.WriteLine("YOU WIN!!! ");
                     GlobalMethods.PauseConsoleWithStringParameter("WAY TO GO " + player2.PlayerName);
-                    playGame = false;
+                    victoryCondition = true;
                     break;
                 }
                 else
@@ -44,24 +44,7 @@ namespace Console_Battleship.App
                 }
             }
         }
-        private static Player playGamePlayerVsPlayer(Player player1, Player player2)
-        {
-            Shot playerShot = getShotCoordinatesForPlayerVsPlayer(player1, player2);
-            if (evaluateShotAsHit(playerShot))
-            {
-                if (evaluateShotAsSinkingPlayerShip(playerShot, player1.Shots.Where(shot => shot.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList(), player2.Ships))
-                {
-                    Console.WriteLine("You sunk their ship!");
-                }
-            }
-
-            Console.WriteLine();
-            player1.Shots.Add(playerShot);
-            showGameBoard(player1);
-
-            return player1;
-        }
-        private static void showGameBoard(Player player)
+        private static void showGameBoardForPlayer(Player player)
         {
             GlobalMethods.displayTopRow();
             for (int y = 0; y < StaticValues.Y_AXIS_SIZE; y++)
@@ -71,7 +54,7 @@ namespace Console_Battleship.App
                 {
                     if (player.Shots.Where(i => i.Location.X_Axis == x && i.Location.Y_Axis == y).Count() > 0)
                     {
-                        if(player.Shots.Where(i => i.Location.X_Axis == x && i.Location.Y_Axis == y).FirstOrDefault().IsHit)
+                        if (player.Shots.Where(i => i.Location.X_Axis == x && i.Location.Y_Axis == y).FirstOrDefault().IsHit)
                         {
                             Console.Write("{0,4}", "X");
                         }
@@ -88,26 +71,43 @@ namespace Console_Battleship.App
                 Console.WriteLine();
             }
         }
+        private static Player currentPlayerTurnVsOpponent(Player currentPlayer, Player opponentPlayer)
+        {
+            Shot currentPlayerShot = getShotCoordinatesForPlayerVsPlayer(currentPlayer, opponentPlayer);
+            if (evaluateShotAsHit(currentPlayerShot))
+            {
+                if (doesShotSinkTheOpponentsShip(currentPlayerShot, currentPlayer.Shots.Where(shot => shot.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList(), opponentPlayer.Ships))
+                {
+                    Console.WriteLine("You sunk their ship!");
+                }
+            }
+
+            Console.WriteLine();
+            currentPlayer.Shots.Add(currentPlayerShot);
+            showGameBoardForPlayer(currentPlayer);
+
+            return currentPlayer;
+        }
         private static Shot getShotCoordinatesForPlayerVsPlayer(Player playerShooting, Player playerBeingShot)
         {
             Shot returnShot = new Shot();
 
             Console.Clear();
             Console.WriteLine(playerShooting.PlayerName + " shooting " + playerBeingShot.PlayerName);
-            showGameBoard(playerShooting);
+            showGameBoardForPlayer(playerShooting);
             bool areValidCoordinates = false;
             while (!areValidCoordinates)
             {
                 int x_coordinate = GlobalMethods.takeNumericInput("Type the X coordinate for your shot: ", new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
                 int y_coordinate = GlobalMethods.takeNumericInput("Type the Y coordinate for your shot: ", new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-                if (areShotCoordinatesValidForPlayer(playerShooting, x_coordinate, y_coordinate))
+                if (!areShotCoordinatesAlreadyTakeByPlayer(playerShooting, x_coordinate, y_coordinate))
                 {
                     returnShot.Location = new Coordinate
                     {
                         X_Axis = x_coordinate,
                         Y_Axis = y_coordinate
                     };
-                    returnShot.IsHit = doShotCoordinatesHit(x_coordinate, y_coordinate, playerBeingShot);
+                    returnShot.IsHit = doesShotHitTheOpponentsShips(x_coordinate, y_coordinate, playerBeingShot);
 
                     areValidCoordinates = true;
                 }
@@ -120,15 +120,15 @@ namespace Console_Battleship.App
 
             return returnShot;
         }
-        private static bool areShotCoordinatesValidForPlayer(Player playerShooting, int x_coordinate, int y_coordinate)
+        private static bool areShotCoordinatesAlreadyTakeByPlayer(Player playerShooting, int x_coordinate, int y_coordinate)
         {
             if(playerShooting.Shots.Where(shot => shot.Location.X_Axis == x_coordinate && shot.Location.Y_Axis == y_coordinate).Count() > 0)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
-        private static bool doShotCoordinatesHit(int x_coordinate, int y_coordinate, Player playerBeingShot)
+        private static bool doesShotHitTheOpponentsShips(int x_coordinate, int y_coordinate, Player playerBeingShot)
         {
             foreach(Ship playerShip in playerBeingShot.Ships)
             {
@@ -153,7 +153,7 @@ namespace Console_Battleship.App
                 return false;
             }
         }
-        private static bool evaluateShotAsSinkingPlayerShip(Shot shot, List<Coordinate> shots, List<Ship> opponentShips)
+        private static bool doesShotSinkTheOpponentsShip(Shot shot, List<Coordinate> shots, List<Ship> opponentShips)
         {
             int test = 0;
             foreach(Ship ship in opponentShips)
@@ -180,25 +180,29 @@ namespace Console_Battleship.App
 
             return false;
         }
-        private static bool evaluateGameOver(List<Coordinate> playerShots, List<Ship> playerShips)
+        private static bool didPlayerSinkAllOpponentShips(Player currentPlayer, List<Ship> opponentShips)
         {
-            bool gameOver = true;
+            //Get all current player's shots into a list of coordinates
+            List<Coordinate> currentPlayerShots = currentPlayer.Shots.Where(x => x.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList();
+
+            //Get all opponent player's ships into a list of coordinates
             List<Coordinate> shipCoordinates = new List<Coordinate>();
-            foreach(Ship ship in playerShips)
+            foreach(Ship ship in opponentShips)
             {
                 shipCoordinates.AddRange(ship.ShipLocation);
             }
 
-
-            foreach(Coordinate coordinate in shipCoordinates)
+            //Check each ship coordinate if it exists in the current player's list of shots
+            //If any ship coordinates are found that aren't in the list of shots, return a false
+            foreach (Coordinate coordinate in shipCoordinates)
             {
-                if(playerShots.Where(x => x.X_Axis == coordinate.X_Axis && x.Y_Axis == coordinate.Y_Axis).Count() == 0)
+                if(currentPlayerShots.Where(x => x.X_Axis == coordinate.X_Axis && x.Y_Axis == coordinate.Y_Axis).Count() == 0)
                 {
                     return false;
                 }
             }
 
-            return gameOver;
+            return true;
         }
     }
 }
