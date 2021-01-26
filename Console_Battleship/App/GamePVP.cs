@@ -15,9 +15,33 @@ namespace Console_Battleship.App
             while (playGame)
             {
                 player1 = playGamePlayerVsPlayer(player1, player2);
-                //evaluate if game is won
+                if (evaluateGameOver(player1.Shots.Where(x => x.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList(), player2.Ships))
+                {
+                    Console.Clear();
+                    Console.WriteLine("YOU WIN!!! ");
+                    GlobalMethods.PauseConsoleWithStringParameter("WAY TO GO " + player1.PlayerName);
+                    playGame = false;
+                    break;
+                }
+                else
+                {
+                    GlobalMethods.PauseConsoleWithStringParameter("Get ready to give the screen to the next player");
+                }
+
+
                 player2 = playGamePlayerVsPlayer(player2, player1);
-                //evaluate if game is won
+                if (evaluateGameOver(player2.Shots.Where(x => x.IsHit == true).Select(shot => new Coordinate { X_Axis = shot.Location.X_Axis, Y_Axis = shot.Location.Y_Axis }).ToList(), player1.Ships))
+                {
+                    Console.Clear();
+                    Console.WriteLine("YOU WIN!!! ");
+                    GlobalMethods.PauseConsoleWithStringParameter("WAY TO GO " + player2.PlayerName);
+                    playGame = false;
+                    break;
+                }
+                else
+                {
+                    GlobalMethods.PauseConsoleWithStringParameter("Get ready to give the screen to the next player");
+                }
             }
         }
         private static Player playGamePlayerVsPlayer(Player player1, Player player2)
@@ -34,7 +58,6 @@ namespace Console_Battleship.App
             Console.WriteLine();
             player1.Shots.Add(playerShot);
             showGameBoard(player1);
-            GlobalMethods.PauseConsoleWithStringParameter("Get ready to give the screen to the next player");
 
             return player1;
         }
@@ -84,14 +107,15 @@ namespace Console_Battleship.App
                         X_Axis = x_coordinate,
                         Y_Axis = y_coordinate
                     };
-                    returnShot.IsHit = doShotCoordinatesHit(x_coordinate, y_coordinate, playerBeingShot);                
+                    returnShot.IsHit = doShotCoordinatesHit(x_coordinate, y_coordinate, playerBeingShot);
+
+                    areValidCoordinates = true;
                 }
                 else
                 {
+                    Console.WriteLine();
                     Console.WriteLine("You already shot there. Please try again");
                 }
-
-                areValidCoordinates = true;
             }
 
             return returnShot;
@@ -155,6 +179,26 @@ namespace Console_Battleship.App
             }
 
             return false;
+        }
+        private static bool evaluateGameOver(List<Coordinate> playerShots, List<Ship> playerShips)
+        {
+            bool gameOver = true;
+            List<Coordinate> shipCoordinates = new List<Coordinate>();
+            foreach(Ship ship in playerShips)
+            {
+                shipCoordinates.AddRange(ship.ShipLocation);
+            }
+
+
+            foreach(Coordinate coordinate in shipCoordinates)
+            {
+                if(playerShots.Where(x => x.X_Axis == coordinate.X_Axis && x.Y_Axis == coordinate.Y_Axis).Count() == 0)
+                {
+                    return false;
+                }
+            }
+
+            return gameOver;
         }
     }
 }

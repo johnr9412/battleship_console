@@ -35,6 +35,7 @@ namespace Console_Battleship.App
             {
                 Console.Clear();
                 Testing.automateSetup();
+                return false;
             }
 
             return true;
