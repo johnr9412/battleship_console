@@ -15,7 +15,6 @@ namespace Console_Battleship.App
 
             Console.WriteLine("Choose an option from below");
             Console.WriteLine("(1) Play against a person");
-            Console.WriteLine("(2) Play against a computer");
             Console.WriteLine("(0) Exit");
             int menuChoice = GlobalMethods.takeNumericInput("Type the number associated with your chosen option above: ", StaticValues.ALLOWABLE_MAIN_MENU_CHOICES);
 
@@ -23,11 +22,6 @@ namespace Console_Battleship.App
             {
                 MenuPVP.setupPVP();
 
-                return false;
-            }
-            else if(menuChoice == 2)
-            {
-                GlobalMethods.PauseConsoleWithStringParameter("That isn't done yet! Pick a different option");
                 return false;
             }
             else if(menuChoice == 0)
